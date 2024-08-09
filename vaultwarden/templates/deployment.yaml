@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vaultwarden-deployment
+  labels:
+    app: vaultwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vaultwarden
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      volumes:
+        - name: vaultwarden-data
+          persistentVolumeClaim:
+            claimName: vaultwarden-data
+      containers:
+        - name: vaultwarden
+          image: vaultwarden/server:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: vaultwarden-data
+              mountPath: /data

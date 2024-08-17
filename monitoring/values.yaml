@@ -1,0 +1,20 @@
+prometheus:
+  server:
+    ingress:
+      enabled: false
+
+grafana:
+  grafana.ini:
+    server:
+      domain: grafana.home.kyoku.dev
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - "grafana.home.kyoku.dev"
+    tls:
+      - secretName: grafana-server-tls
+        hosts:
+          - grafana.home.kyoku.dev
+    ingressClassName: nginx

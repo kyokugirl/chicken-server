@@ -1,0 +1,6 @@
+dependencies:
+- name: sm-operator
+  repository: https://charts.bitwarden.com/
+  version: 0.1.0-Beta
+digest: sha256:92e10938bb56f37630fe5bffbb8fb1dc7c8e7249fa3a62ef60bbfe68e62bb4ed
+generated: "2024-08-15T15:32:12.734595068+09:00"

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manura-discord-deployment
+  namespace: manura-discord
+  labels:
+    app: manura-discord
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: manura-discord
+  template:
+    metadata:
+      labels:
+        app: manura-discord
+    spec:
+      serviceAccountName: manura-discord-service-account
+      containers:
+        - name: manura-discord
+          image: ghcr.io/kyokugirl/manura-discord:0.2-slim
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MANURA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: manura-discord-kube-api-secret
+                  key: token
+            - name: GUILD_ID
+              valueFrom:
+                secretKeyRef:
+                  name: manura-discord-secrets
+                  key: GUILD_ID
+            - name: DISCORD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: manura-discord-secrets
+                  key: DISCORD_TOKEN
+            - name: MANURA_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: manura-discord-secrets
+                  key: MANURA_HOST
+            - name: MANURA_CA_CERT
+              valueFrom:
+                secretKeyRef:
+                  name: manura-discord-secrets
+                  key: MANURA_CA_CERT
+      imagePullSecrets:
+        - name: ghcr-login-secret

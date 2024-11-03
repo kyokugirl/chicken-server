@@ -1,0 +1,4 @@
+postgres:
+  database: pokemanura-api
+  user: admin
+  password: admin

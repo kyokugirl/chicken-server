@@ -1,7 +1,16 @@
 prometheus:
   server:
     ingress:
-      enabled: false
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+        - "prometheus.home.kyoku.dev"
+      tls:
+        - secretName: prometheus-server-tls
+          hosts:
+            - prometheus.home.kyoku.dev
+      ingressClassName: nginx
 
 grafana:
   grafana.ini:

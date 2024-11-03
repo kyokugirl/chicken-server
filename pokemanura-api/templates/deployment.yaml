@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pokemanura-postgres
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: pokemanura-api-postgres-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pokemanura-api-postgres
+      volumes:
+        - name: pokemanura-api-postgres
+          persistentVolumeClaim:
+            claimName: pokemanura-api-postgres-pvc

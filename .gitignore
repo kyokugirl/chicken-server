@@ -3,3 +3,5 @@ auth
 
 ## Charts dependencies
 **/charts/*.tgz
+
+sops.yaml
